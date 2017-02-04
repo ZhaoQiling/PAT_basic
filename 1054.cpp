@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
-#include <iomanip>
+#include <stdio.h>
+#include <stdlib.h>
 using namespace std;
 string input[200];
 double isRight(string& s);
@@ -25,13 +26,13 @@ int main()
             cout << "ERROR: " << input[i] << " is not a legal number" << endl;
         }
     }
-    if(nNum == 0)
-        cout << "The average of 0 numbers is Undefined";
+    if(nNum <= 0)
+        printf("The average of 0 numbers is Undefined\n");
     else if(nNum == 1)
-        cout << "The average of " << nNum << " number is " << fixed << setprecision(2) << sum / nNum;
+        printf("The average of 1 number is %.2f\n", sum / nNum);
     else
-        cout << "The average of " << nNum << " numbers is " << fixed << setprecision(2) << sum / nNum;
-    return 0;
+        printf("The average of %d numbers is %.2f\n", nNum, sum / nNum);
+    //system("pause");
 }
 double isRight(string& s)
 {
@@ -65,15 +66,27 @@ double isRight(string& s)
         beforePoint = beforePoint * 10 + (s[loc] - '0');
     }
     loc++;
+    int sum = 0;
+    for(int i = loc; i <= s.length() - 1; i++)
+    {
+        sum++;
+    }
+    if(sum > 2) return 9999;
     for(int i = s.length() - 1; i >= loc; i--)
     {
         afterPoint = afterPoint * 0.1 + (s[i] - '0');
     }
     afterPoint *= 0.1;
-    if(afterPoint * 100 - int(afterPoint * 100) > 0) return 9999;
-    if(beforePoint > 1000) return 9999;
+    //cout << start << " " << loc <<endl;
+    //if(beforePoint == 0 && s[start] == '0' && s[start + 1] == '0')
+    //    return 9999;
+    //if(beforePoint != 0 && s[start] == '0' && start + 1 != loc)
+    //{
+    //    return 9999;
+    //}
     double ans = beforePoint + afterPoint;
-    if(ans == 0 && start == 1) return 9999;
+    if(ans > 1000) return 9999;
+    //if(s[s.length() - 1] == '.') return 9999;
     if(start == 1) ans *= -1;
     //cout << ans << endl;
     return ans;
